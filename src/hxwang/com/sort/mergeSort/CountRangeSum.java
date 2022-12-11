@@ -17,10 +17,10 @@ public class CountRangeSum {
     问题转换：求出数组的区间和数组
      */
     public int countRangeSum(int[] nums, int lower, int upper) {
-        //1. 获得区间和数组
         if (nums == null || nums.length == 0) {
             return 0;
         }
+        //1. 获得区间和数组
         long [] sum = new long[nums.length];
         sum[0] = nums[0];
         for (int i = 1; i < nums.length; i++) {
@@ -31,9 +31,11 @@ public class CountRangeSum {
     }
 
     private int process(long[] sum, int l, int r, int lower, int upper) {
+        // 当区间内只有一个数时判断这个数是否符合条件
         if (l == r) {
             return sum[l] >= lower && sum[l] <= upper ? 1 : 0;
         }
+        // 2. 左组符合范围的个数+右组符合范围的个数+合并过程中符合范围的个数
         int m = l + ((r - l) >> 1);// 取中点
         return process(sum, l, m, lower, upper)
                 + process(sum, m + 1, r, lower, upper)
@@ -41,7 +43,9 @@ public class CountRangeSum {
     }
 
     private int merge(long[] arr, int l, int m, int r, int lower, int upper) {
+        // 3. 符合条件的数是 右组的数-左组的数在条件范围内 转化为 左组的数在[右组的数-upper,左组的数-lower]范围内
         int ans = 0;
+        // 设定一个窗口，因为左组和右组分别有序所以窗口不会回退 时间复杂度为
         int windowL = l;
         int windowR = l;
         for (int i = m + 1; i <= r; i++) {
@@ -55,6 +59,7 @@ public class CountRangeSum {
             while (windowL <= m && arr[windowL] < min) {
                 windowL++;
             }
+            // 窗口内的数为符合条件的数
             ans += windowR - windowL;
         }
         long[] help = new long[r - l + 1];
