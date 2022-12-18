@@ -59,7 +59,8 @@ public class HeLangGuoQi {
         process(arr, 0, arr.length - 1);
     }
 
-    private static void swap(int[] arr, int index, int less) {
+    // 将数组中两个位置的数交换
+    public static void swap(int[] arr, int index, int less) {
         arr[index] ^= arr[less];
         arr[less] ^= arr[index];
         arr[index] ^= arr[less];
