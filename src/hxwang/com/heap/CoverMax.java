@@ -36,6 +36,7 @@ public class CoverMax {
 
     /**
      * 以 线段起始值 进行对比的比较器
+     *
      * @author hxwang
      * @date 2022/12/23
      */
@@ -46,19 +47,19 @@ public class CoverMax {
         }
     }
 
-    public static int maxCover(int[][] m){
+    public static int maxCover(int[][] m) {
         Line[] lines = new Line[m.length];
-        for (int i=0;i<m.length;i++){
-            lines[i] = new Line(m[i][0],m[i][1]);
+        for (int i = 0; i < m.length; i++) {
+            lines[i] = new Line(m[i][0], m[i][1]);
         }
         // 将数组按 起始位置大小排序
-        Arrays.sort(lines,new StartCompare());
+        Arrays.sort(lines, new StartCompare());
         // 默认小根堆
         PriorityQueue<Integer> heap = new PriorityQueue<>();
         // 记录线段数
         int max = 0;
-        for (int i=0;i<lines.length;i++){
-            while (!heap.isEmpty() && heap.peek() <= lines[i].start){
+        for (int i = 0; i < lines.length; i++) {
+            while (!heap.isEmpty() && heap.peek() <= lines[i].start) {
                 heap.poll();
             }
             heap.add(lines[i].end);
